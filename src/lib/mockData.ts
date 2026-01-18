@@ -1,4 +1,4 @@
-import type { Project, Task, TeamMember, Activity, DashboardStats, JiraTicket, Sprint, LearningPath, LearningProgress, Certificate, TekyuProject } from '@/types';
+import type { Project, Task, TeamMember, Activity, DashboardStats, JiraTicket, Sprint, LearningPath, LearningProgress, Certificate, TekyuProject, KBSpace, KBPage, KBTemplate } from '@/types';
 
 export const mockTeamMembers: TeamMember[] = [
   {
@@ -18,7 +18,7 @@ export const mockTeamMembers: TeamMember[] = [
     id: '2',
     email: 'sarah@devsecai.io',
     name: 'Sarah Chen',
-    role: 'lead',
+    role: 'ambassador',
     department: 'Security',
     projects: ['1', '2'],
     tasksCompleted: 38,
@@ -31,7 +31,7 @@ export const mockTeamMembers: TeamMember[] = [
     id: '3',
     email: 'mike@devsecai.io',
     name: 'Mike Johnson',
-    role: 'member',
+    role: 'ambassador',
     department: 'DevOps',
     projects: ['2', '3'],
     tasksCompleted: 29,
@@ -44,7 +44,7 @@ export const mockTeamMembers: TeamMember[] = [
     id: '4',
     email: 'emily@devsecai.io',
     name: 'Emily Davis',
-    role: 'member',
+    role: 'lead',
     department: 'Engineering',
     projects: ['1', '3'],
     tasksCompleted: 22,
@@ -791,5 +791,789 @@ export const mockTekyuProjects: TekyuProject[] = [
     createdBy: '1',
     createdAt: new Date('2025-01-18'),
     updatedAt: new Date(),
+  },
+];
+
+// Knowledge Base Data
+export const mockKBSpaces: KBSpace[] = [
+  {
+    id: 'space-1',
+    name: 'Engineering',
+    key: 'ENG',
+    description: 'Technical documentation, architecture decisions, and engineering best practices.',
+    icon: '⚙️',
+    color: '#3EBBB7',
+    ownerId: '1',
+    visibility: 'public',
+    createdAt: new Date('2024-01-15'),
+    updatedAt: new Date(),
+  },
+  {
+    id: 'space-2',
+    name: 'Security',
+    key: 'SEC',
+    description: 'Security policies, incident response procedures, and compliance documentation.',
+    icon: '🔒',
+    color: '#41DC7A',
+    ownerId: '2',
+    visibility: 'public',
+    createdAt: new Date('2024-01-20'),
+    updatedAt: new Date(),
+  },
+  {
+    id: 'space-3',
+    name: 'DevOps',
+    key: 'OPS',
+    description: 'CI/CD pipelines, infrastructure documentation, and deployment guides.',
+    icon: '🚀',
+    color: '#6366F1',
+    ownerId: '3',
+    visibility: 'public',
+    createdAt: new Date('2024-02-01'),
+    updatedAt: new Date(),
+  },
+  {
+    id: 'space-4',
+    name: 'Onboarding',
+    key: 'ONB',
+    description: 'New employee onboarding materials, company policies, and getting started guides.',
+    icon: '👋',
+    color: '#F59E0B',
+    ownerId: '1',
+    visibility: 'public',
+    createdAt: new Date('2024-02-15'),
+    updatedAt: new Date(),
+  },
+  {
+    id: 'space-5',
+    name: 'Leadership',
+    key: 'LEAD',
+    description: 'Strategic planning, team management, and confidential leadership materials.',
+    icon: '👑',
+    color: '#EF4444',
+    ownerId: '1',
+    visibility: 'restricted',
+    allowedRoles: ['admin', 'ambassador'],
+    createdAt: new Date('2024-03-01'),
+    updatedAt: new Date(),
+  },
+];
+
+export const mockKBPages: KBPage[] = [
+  // Engineering Space Pages
+  {
+    id: 'page-1',
+    spaceId: 'space-1',
+    title: 'Welcome to DevSecAI Engineering',
+    content: `# Welcome to DevSecAI Engineering
+
+Welcome to the Engineering knowledge base! This space contains all technical documentation, architecture decisions, and engineering best practices for the DevSecAI platform.
+
+## Quick Links
+
+- [Architecture Overview](#architecture)
+- [Development Setup](#setup)
+- [Coding Standards](#standards)
+- [API Documentation](#api)
+
+## Our Mission
+
+We build secure-by-default tools that help engineering teams ship secure software faster. Our platform integrates security into every stage of the SDLC.
+
+## Key Technologies
+
+| Category | Technologies |
+|----------|-------------|
+| Frontend | Next.js, TypeScript, Tailwind CSS |
+| Backend | Python, FastAPI, Node.js |
+| Infrastructure | AWS, Terraform, Kubernetes |
+| Security | SonarQube, Semgrep, Trivy |
+
+## Getting Help
+
+- **Slack**: #engineering-help
+- **On-call**: Check PagerDuty rotation
+- **Documentation**: You're already here!`,
+    excerpt: 'Introduction to the Engineering knowledge base and quick links to key resources.',
+    author: '1',
+    lastEditedBy: '1',
+    status: 'published',
+    labels: ['welcome', 'getting-started'],
+    viewCount: 156,
+    likes: ['2', '3', '4', '5'],
+    isFeatured: true,
+    order: 1,
+    createdAt: new Date('2024-01-15'),
+    updatedAt: new Date(),
+  },
+  {
+    id: 'page-2',
+    spaceId: 'space-1',
+    title: 'Development Environment Setup',
+    content: `# Development Environment Setup
+
+This guide will help you set up your local development environment for DevSecAI.
+
+## Prerequisites
+
+- Node.js 20+
+- Python 3.11+
+- Docker Desktop
+- AWS CLI configured
+- Git
+
+## Step 1: Clone the Repositories
+
+\`\`\`bash
+git clone https://github.com/devsecai/platform.git
+git clone https://github.com/devsecai/api.git
+git clone https://github.com/devsecai/infrastructure.git
+\`\`\`
+
+## Step 2: Install Dependencies
+
+\`\`\`bash
+# Frontend
+cd platform && npm install
+
+# Backend
+cd ../api && pip install -r requirements.txt
+\`\`\`
+
+## Step 3: Configure Environment
+
+Copy the example environment files:
+
+\`\`\`bash
+cp .env.example .env.local
+\`\`\`
+
+Update the following variables:
+- \`DATABASE_URL\`
+- \`AWS_ACCESS_KEY_ID\`
+- \`AWS_SECRET_ACCESS_KEY\`
+
+## Step 4: Start Development Servers
+
+\`\`\`bash
+# Start all services
+docker-compose up -d
+
+# Start frontend
+npm run dev
+
+# Start backend
+python -m uvicorn main:app --reload
+\`\`\`
+
+## Troubleshooting
+
+### Port conflicts
+If port 3000 is in use, update \`PORT\` in your \`.env.local\`.
+
+### Database connection issues
+Ensure PostgreSQL container is running: \`docker ps\``,
+    excerpt: 'Complete guide to setting up your local development environment.',
+    author: '1',
+    lastEditedBy: '4',
+    status: 'published',
+    labels: ['setup', 'development', 'getting-started'],
+    viewCount: 234,
+    likes: ['2', '3', '5'],
+    isFeatured: true,
+    order: 2,
+    createdAt: new Date('2024-01-16'),
+    updatedAt: new Date('2024-12-10'),
+  },
+  {
+    id: 'page-3',
+    spaceId: 'space-1',
+    parentId: 'page-2',
+    title: 'IDE Configuration',
+    content: `# IDE Configuration
+
+Recommended IDE settings for DevSecAI development.
+
+## VS Code Extensions
+
+Install these essential extensions:
+
+- **ESLint** - JavaScript/TypeScript linting
+- **Prettier** - Code formatting
+- **Python** - Python language support
+- **Tailwind CSS IntelliSense** - Tailwind autocomplete
+- **GitLens** - Git history and blame
+
+## Recommended Settings
+
+Add to your \`settings.json\`:
+
+\`\`\`json
+{
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "typescript.preferences.importModuleSpecifier": "relative",
+  "tailwindCSS.experimental.classRegex": [
+    ["cn\\\\(([^)]*)\\\\)", "'([^']*)'"]
+  ]
+}
+\`\`\`
+
+## Keyboard Shortcuts
+
+| Action | Shortcut |
+|--------|----------|
+| Format document | Shift + Alt + F |
+| Go to definition | F12 |
+| Find all references | Shift + F12 |
+| Quick fix | Ctrl + . |`,
+    excerpt: 'Recommended IDE configuration for optimal development experience.',
+    author: '4',
+    lastEditedBy: '4',
+    status: 'published',
+    labels: ['ide', 'setup', 'vscode'],
+    viewCount: 89,
+    likes: ['1', '3'],
+    isFeatured: false,
+    order: 1,
+    createdAt: new Date('2024-02-01'),
+    updatedAt: new Date('2024-11-15'),
+  },
+  // Security Space Pages
+  {
+    id: 'page-4',
+    spaceId: 'space-2',
+    title: 'Security Policies Overview',
+    content: `# Security Policies Overview
+
+DevSecAI maintains strict security policies to protect our platform and customer data.
+
+## Core Principles
+
+1. **Security by Default** - All features must be secure out of the box
+2. **Defense in Depth** - Multiple layers of security controls
+3. **Least Privilege** - Minimum necessary access rights
+4. **Zero Trust** - Verify explicitly, assume breach
+
+## Compliance Standards
+
+We maintain compliance with:
+
+- SOC 2 Type II
+- ISO 27001
+- GDPR
+- EU AI Act (in progress)
+
+## Security Controls
+
+### Authentication
+- MFA required for all accounts
+- SSO via SAML/OIDC
+- Session timeout: 4 hours
+
+### Data Protection
+- Encryption at rest (AES-256)
+- Encryption in transit (TLS 1.3)
+- Key rotation every 90 days
+
+### Access Control
+- Role-based access control (RBAC)
+- Regular access reviews (quarterly)
+- JIT access for production
+
+## Incident Response
+
+Report security incidents immediately to:
+- **Email**: security@devsecai.io
+- **Slack**: #security-incidents
+- **PagerDuty**: Security On-Call`,
+    excerpt: 'Overview of DevSecAI security policies and compliance standards.',
+    author: '2',
+    lastEditedBy: '2',
+    status: 'published',
+    labels: ['security', 'policy', 'compliance'],
+    viewCount: 312,
+    likes: ['1', '3', '4', '5'],
+    isFeatured: true,
+    order: 1,
+    createdAt: new Date('2024-01-20'),
+    updatedAt: new Date('2024-12-01'),
+  },
+  {
+    id: 'page-5',
+    spaceId: 'space-2',
+    title: 'Incident Response Runbook',
+    content: `# Incident Response Runbook
+
+## Severity Levels
+
+| Level | Description | Response Time | Examples |
+|-------|-------------|---------------|----------|
+| P1 | Critical | 15 minutes | Data breach, service down |
+| P2 | High | 1 hour | Security vulnerability, partial outage |
+| P3 | Medium | 4 hours | Performance degradation |
+| P4 | Low | 24 hours | Minor issues |
+
+## Response Procedure
+
+### 1. Detection & Triage (0-15 min)
+- [ ] Acknowledge alert in PagerDuty
+- [ ] Create incident channel: #inc-YYYYMMDD-brief-description
+- [ ] Assign Incident Commander (IC)
+- [ ] Initial severity assessment
+
+### 2. Containment (15-60 min)
+- [ ] Isolate affected systems
+- [ ] Preserve evidence (logs, snapshots)
+- [ ] Block malicious IPs/users if applicable
+- [ ] Notify stakeholders
+
+### 3. Eradication (1-4 hours)
+- [ ] Identify root cause
+- [ ] Remove threat/fix vulnerability
+- [ ] Patch affected systems
+- [ ] Verify fix in staging
+
+### 4. Recovery (4-24 hours)
+- [ ] Restore services gradually
+- [ ] Monitor for recurrence
+- [ ] Validate data integrity
+- [ ] Clear incident channel
+
+### 5. Post-Mortem (Within 5 days)
+- [ ] Schedule blameless post-mortem
+- [ ] Document timeline
+- [ ] Identify action items
+- [ ] Share learnings
+
+## Contacts
+
+| Role | Primary | Backup |
+|------|---------|--------|
+| Security Lead | Sarah Chen | Charlie Peter |
+| Engineering | Charlie Peter | Emily Davis |
+| Legal | External Counsel | - |`,
+    excerpt: 'Step-by-step incident response procedures for security events.',
+    author: '2',
+    lastEditedBy: '1',
+    status: 'published',
+    labels: ['security', 'runbook', 'incident-response'],
+    viewCount: 178,
+    likes: ['1', '4'],
+    isFeatured: true,
+    order: 2,
+    createdAt: new Date('2024-02-10'),
+    updatedAt: new Date('2025-01-05'),
+  },
+  // DevOps Space Pages
+  {
+    id: 'page-6',
+    spaceId: 'space-3',
+    title: 'CI/CD Pipeline Overview',
+    content: `# CI/CD Pipeline Overview
+
+Our CI/CD pipeline ensures secure, reliable deployments.
+
+## Pipeline Stages
+
+\`\`\`
+┌─────────┐   ┌─────────┐   ┌─────────┐   ┌─────────┐   ┌─────────┐
+│  Build  │ → │  Test   │ → │  Scan   │ → │ Deploy  │ → │ Monitor │
+└─────────┘   └─────────┘   └─────────┘   └─────────┘   └─────────┘
+\`\`\`
+
+### 1. Build Stage
+- Compile code
+- Build Docker images
+- Generate artifacts
+
+### 2. Test Stage
+- Unit tests (>80% coverage required)
+- Integration tests
+- E2E tests (critical paths)
+
+### 3. Security Scan Stage
+- SAST: SonarQube, Semgrep
+- SCA: Dependabot, Snyk
+- Container scanning: Trivy
+- Secrets detection: GitLeaks
+
+### 4. Deploy Stage
+- Deploy to staging (automatic)
+- Deploy to production (manual approval)
+- Blue-green deployment
+
+### 5. Monitor Stage
+- Health checks
+- Performance metrics
+- Error tracking
+
+## Environments
+
+| Environment | URL | Auto-deploy |
+|-------------|-----|-------------|
+| Development | dev.devsecai.io | Every commit |
+| Staging | staging.devsecai.io | PR merge |
+| Production | app.devsecai.io | Manual |
+
+## Rollback Procedure
+
+\`\`\`bash
+# Quick rollback to previous version
+./scripts/rollback.sh --env production --version previous
+\`\`\``,
+    excerpt: 'Overview of our CI/CD pipeline architecture and deployment process.',
+    author: '3',
+    lastEditedBy: '3',
+    status: 'published',
+    labels: ['devops', 'ci-cd', 'deployment'],
+    viewCount: 145,
+    likes: ['1', '2', '4'],
+    isFeatured: true,
+    order: 1,
+    createdAt: new Date('2024-02-01'),
+    updatedAt: new Date('2024-12-20'),
+  },
+  // Onboarding Space Pages
+  {
+    id: 'page-7',
+    spaceId: 'space-4',
+    title: 'Welcome to DevSecAI!',
+    content: `# Welcome to DevSecAI! 🎉
+
+Congratulations on joining the team! We're excited to have you.
+
+## Your First Week
+
+### Day 1
+- [ ] Complete HR paperwork
+- [ ] Set up workstation and accounts
+- [ ] Meet your manager and buddy
+- [ ] Read this knowledge base!
+
+### Day 2-3
+- [ ] Complete security training
+- [ ] Set up development environment
+- [ ] Review codebase architecture
+- [ ] Shadow a team member
+
+### Day 4-5
+- [ ] Pick up your first ticket
+- [ ] Attend team standup
+- [ ] 1:1 with your manager
+- [ ] Ask lots of questions!
+
+## Key Accounts to Set Up
+
+1. **Google Workspace** - Email, Calendar, Drive
+2. **Slack** - Team communication
+3. **GitHub** - Code repositories
+4. **AWS** - Cloud infrastructure
+5. **1Password** - Password management
+6. **Notion** - Additional documentation
+
+## Important Slack Channels
+
+- **#general** - Company-wide announcements
+- **#engineering** - Engineering discussions
+- **#security** - Security updates
+- **#random** - Fun stuff
+
+## Your Onboarding Buddy
+
+You've been assigned an onboarding buddy who will help you through your first weeks. Don't hesitate to ask them anything!
+
+## Questions?
+
+Reach out to your manager or post in #new-hires. There are no stupid questions!`,
+    excerpt: 'Welcome guide for new DevSecAI team members.',
+    author: '1',
+    lastEditedBy: '1',
+    status: 'published',
+    labels: ['onboarding', 'welcome', 'getting-started'],
+    viewCount: 89,
+    likes: ['2', '3', '4', '5'],
+    isFeatured: true,
+    order: 1,
+    createdAt: new Date('2024-02-15'),
+    updatedAt: new Date('2025-01-10'),
+  },
+  // Leadership Space Page (restricted)
+  {
+    id: 'page-8',
+    spaceId: 'space-5',
+    title: 'Q1 2025 Strategic Priorities',
+    content: `# Q1 2025 Strategic Priorities
+
+## Executive Summary
+
+This quarter we focus on three key areas: product expansion, team growth, and compliance.
+
+## Priority 1: Product Expansion
+
+### Goals
+- Launch EU AI Act compliance module
+- Expand DORA coverage
+- Release API v2
+
+### Key Results
+- [ ] 50 enterprise customers on compliance module
+- [ ] 20% increase in ARR
+- [ ] API v2 adoption by 80% of customers
+
+## Priority 2: Team Growth
+
+### Goals
+- Hire 5 engineers
+- Promote 2 ambassadors
+- Expand to US market
+
+### Key Results
+- [ ] Complete hiring by end of February
+- [ ] Launch ambassador program
+- [ ] Open US entity
+
+## Priority 3: Compliance
+
+### Goals
+- Achieve SOC 2 Type II
+- Complete ISO 27001 audit
+- Begin CRA preparation
+
+### Key Results
+- [ ] SOC 2 report by March 15
+- [ ] ISO 27001 certificate by March 30
+- [ ] CRA gap analysis complete
+
+## Budget Allocation
+
+| Category | Q1 Budget | % of Total |
+|----------|-----------|------------|
+| Engineering | $500K | 40% |
+| Sales & Marketing | $300K | 24% |
+| Operations | $200K | 16% |
+| R&D | $250K | 20% |
+
+**CONFIDENTIAL - Leadership Only**`,
+    excerpt: 'Strategic priorities and key results for Q1 2025.',
+    author: '1',
+    lastEditedBy: '1',
+    status: 'published',
+    labels: ['strategy', 'okrs', 'q1-2025', 'confidential'],
+    viewCount: 23,
+    likes: ['2', '3'],
+    isFeatured: false,
+    order: 1,
+    createdAt: new Date('2025-01-02'),
+    updatedAt: new Date('2025-01-15'),
+  },
+];
+
+export const mockKBTemplates: KBTemplate[] = [
+  {
+    id: 'template-1',
+    name: 'Meeting Notes',
+    description: 'Standard template for recording meeting notes and action items.',
+    content: `# Meeting: [Title]
+
+**Date**: [Date]
+**Attendees**: [Names]
+**Facilitator**: [Name]
+
+## Agenda
+
+1. Item 1
+2. Item 2
+3. Item 3
+
+## Discussion Notes
+
+### Topic 1
+- Key point
+- Key point
+
+### Topic 2
+- Key point
+- Key point
+
+## Action Items
+
+| Action | Owner | Due Date |
+|--------|-------|----------|
+| Task 1 | @name | YYYY-MM-DD |
+| Task 2 | @name | YYYY-MM-DD |
+
+## Next Meeting
+
+**Date**: [Date]
+**Topics**: [Preview of next agenda]`,
+    category: 'meeting-notes',
+    createdBy: '1',
+    isGlobal: true,
+    createdAt: new Date('2024-01-15'),
+  },
+  {
+    id: 'template-2',
+    name: 'How-To Guide',
+    description: 'Step-by-step guide template for documenting processes.',
+    content: `# How to: [Title]
+
+## Overview
+
+Brief description of what this guide covers and who it's for.
+
+## Prerequisites
+
+- Requirement 1
+- Requirement 2
+- Requirement 3
+
+## Steps
+
+### Step 1: [Title]
+
+Description of the step.
+
+\`\`\`bash
+# Example command
+\`\`\`
+
+### Step 2: [Title]
+
+Description of the step.
+
+### Step 3: [Title]
+
+Description of the step.
+
+## Troubleshooting
+
+### Common Issue 1
+**Problem**: Description
+**Solution**: How to fix it
+
+### Common Issue 2
+**Problem**: Description
+**Solution**: How to fix it
+
+## Related Resources
+
+- [Link 1](#)
+- [Link 2](#)`,
+    category: 'how-to',
+    createdBy: '1',
+    isGlobal: true,
+    createdAt: new Date('2024-01-15'),
+  },
+  {
+    id: 'template-3',
+    name: 'Runbook',
+    description: 'Operational runbook template for incident response and procedures.',
+    content: `# Runbook: [Title]
+
+## Purpose
+
+What this runbook is for and when to use it.
+
+## Scope
+
+What systems/services this runbook covers.
+
+## Prerequisites
+
+- [ ] Access to system X
+- [ ] Permissions Y
+- [ ] Tool Z installed
+
+## Procedure
+
+### Step 1: [Title]
+- [ ] Action item
+- [ ] Action item
+
+### Step 2: [Title]
+- [ ] Action item
+- [ ] Action item
+
+### Step 3: [Title]
+- [ ] Action item
+- [ ] Action item
+
+## Rollback Procedure
+
+If something goes wrong:
+
+1. Step 1
+2. Step 2
+3. Step 3
+
+## Escalation
+
+| Condition | Contact | Method |
+|-----------|---------|--------|
+| After hours | On-call | PagerDuty |
+| Data breach | Security | security@company.com |
+
+## Revision History
+
+| Date | Author | Changes |
+|------|--------|---------|
+| YYYY-MM-DD | Name | Initial version |`,
+    category: 'runbook',
+    createdBy: '2',
+    isGlobal: true,
+    createdAt: new Date('2024-02-01'),
+  },
+  {
+    id: 'template-4',
+    name: 'Architecture Decision Record',
+    description: 'Template for documenting significant architecture decisions.',
+    content: `# ADR: [Title]
+
+## Status
+
+[Proposed | Accepted | Deprecated | Superseded]
+
+## Context
+
+What is the issue that we're seeing that is motivating this decision or change?
+
+## Decision
+
+What is the change that we're proposing and/or doing?
+
+## Consequences
+
+### Positive
+- Benefit 1
+- Benefit 2
+
+### Negative
+- Drawback 1
+- Drawback 2
+
+### Neutral
+- Side effect 1
+
+## Alternatives Considered
+
+### Alternative 1
+- Pros
+- Cons
+- Why rejected
+
+### Alternative 2
+- Pros
+- Cons
+- Why rejected
+
+## References
+
+- [Link 1](#)
+- [Link 2](#)`,
+    category: 'decision',
+    createdBy: '1',
+    isGlobal: true,
+    createdAt: new Date('2024-02-15'),
   },
 ];

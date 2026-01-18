@@ -1,11 +1,13 @@
 // DevSecAI Portal Types
 
+export type UserRole = 'admin' | 'ambassador' | 'lead' | 'member';
+
 export interface User {
   id: string;
   email: string;
   name: string;
   avatar?: string;
-  role: 'admin' | 'lead' | 'member';
+  role: UserRole;
   department?: string;
   createdAt: Date;
   lastActive?: Date;
@@ -182,4 +184,71 @@ export interface TekyuProject {
   createdBy: string;
   createdAt: Date;
   updatedAt: Date;
+}
+
+// Knowledge Base Types (Confluence-style)
+export interface KBSpace {
+  id: string;
+  name: string;
+  key: string; // Short identifier like 'ENG', 'SEC', 'HR'
+  description: string;
+  icon?: string;
+  color?: string;
+  ownerId: string;
+  visibility: 'public' | 'restricted';
+  allowedRoles?: UserRole[];
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface KBPage {
+  id: string;
+  spaceId: string;
+  parentId?: string; // For nested pages
+  title: string;
+  content: string; // Markdown/Rich text content
+  excerpt?: string;
+  author: string;
+  lastEditedBy: string;
+  status: 'draft' | 'published' | 'archived';
+  labels: string[];
+  viewCount: number;
+  likes: string[]; // User IDs who liked
+  isFeatured: boolean;
+  order: number;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface KBPageVersion {
+  id: string;
+  pageId: string;
+  version: number;
+  title: string;
+  content: string;
+  editedBy: string;
+  comment?: string;
+  createdAt: Date;
+}
+
+export interface KBComment {
+  id: string;
+  pageId: string;
+  parentId?: string; // For threaded comments
+  userId: string;
+  content: string;
+  resolved: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface KBTemplate {
+  id: string;
+  name: string;
+  description: string;
+  content: string;
+  category: 'meeting-notes' | 'how-to' | 'runbook' | 'decision' | 'project-plan' | 'custom';
+  createdBy: string;
+  isGlobal: boolean;
+  createdAt: Date;
 }
