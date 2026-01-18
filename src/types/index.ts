@@ -252,3 +252,119 @@ export interface KBTemplate {
   isGlobal: boolean;
   createdAt: Date;
 }
+
+// Certification Types
+export interface Certification {
+  id: string;
+  name: string;
+  issuer: string;
+  description?: string;
+  badgeUrl?: string;
+  verificationUrl?: string;
+  category: 'cloud' | 'security' | 'devops' | 'programming' | 'other';
+}
+
+export interface UserCertification {
+  id: string;
+  userId: string;
+  certificationId: string;
+  certificationName: string;
+  issuer: string;
+  dateEarned: Date;
+  expiryDate?: Date;
+  credentialId?: string;
+  verificationUrl?: string;
+  verified: boolean;
+  verifiedAt?: Date;
+  verifiedBy?: string;
+}
+
+// Operator (Team Member) Types - for Admin Portal
+export interface Operator {
+  id: string;
+  name: string;
+  email: string;
+  avatar?: string;
+  role: UserRole;
+  department?: string;
+  cohort?: string;
+  approvalStatus: 'PENDING' | 'APPROVED' | 'REJECTED';
+  careerStatus?: 'LEARNING' | 'JOB_HUNTING' | 'INTERVIEWING' | 'EMPLOYED';
+  headline?: string;
+  location?: string;
+  linkedinUrl?: string;
+  currentEmployer?: string;
+  jobTitle?: string;
+  completionPercentage: number;
+  lecturesAttended: number;
+  sessionsCompleted: number;
+  projectsCompleted: number;
+  certifications: UserCertification[];
+  lastLogin?: Date;
+  loginCount: number;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+// DevSecAI Operator Projects Types
+export interface OperatorProject {
+  id: string;
+  title: string;
+  subtitle: string;
+  icon: string;
+  difficulty: 'beginner' | 'intermediate' | 'advanced';
+  estimatedHours: number;
+  tier: 'starter' | 'professional' | 'expert';
+  skills: string[];
+  category: 'devsecops' | 'cloud-security' | 'threat-hunting' | 'data-security' | 'ai-security';
+  steps: OperatorProjectStep[];
+}
+
+export interface OperatorProjectStep {
+  id: number;
+  title: string;
+  description: string;
+  icon: string;
+  content: {
+    overview: string;
+    instructions: OperatorInstruction[];
+    tasks: OperatorTask[];
+    quiz?: OperatorQuiz[];
+  };
+}
+
+export interface OperatorInstruction {
+  id: string;
+  title: string;
+  details: string;
+  tip?: string;
+  warning?: string;
+  codeBlock?: {
+    language: string;
+    code: string;
+  };
+}
+
+export interface OperatorTask {
+  id: string;
+  text: string;
+}
+
+export interface OperatorQuiz {
+  question: string;
+  options: string[];
+  correctAnswer: number;
+  explanation: string;
+}
+
+// Operator Project Progress
+export interface OperatorProjectProgress {
+  userId: string;
+  projectId: string;
+  currentStep: number;
+  completedSteps: number[];
+  completedTasks: string[];
+  quizScores: Record<number, number>;
+  startedAt: Date;
+  completedAt?: Date;
+}
