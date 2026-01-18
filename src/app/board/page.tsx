@@ -35,13 +35,22 @@ const priorityConfig: Record<JiraTicket['priority'], { color: string; label: str
   'lowest': { color: 'text-slate-400', label: '⬇⬇' },
 };
 
-function TicketCard({ ticket }: { ticket: JiraTicket }) {
+interface TicketCardProps {
+  ticket: JiraTicket;
+  onDragStart: (e: React.DragEvent, ticket: JiraTicket) => void;
+}
+
+function TicketCard({ ticket, onDragStart }: TicketCardProps) {
   const assignee = mockTeamMembers.find(m => m.id === ticket.assignee);
   const typeConfig = typeIcons[ticket.type];
   const priority = priorityConfig[ticket.priority];
 
   return (
-    <div className="bg-[#1a1f2e] border border-[#2d3548] rounded-lg p-4 cursor-pointer hover:border-[#3EBBB7]/50 transition-all group mb-3">
+    <div
+      draggable
+      onDragStart={(e) => onDragStart(e, ticket)}
+      className="bg-[#1a1f2e] border border-[#2d3548] rounded-lg p-4 cursor-grab active:cursor-grabbing hover:border-[#3EBBB7]/50 transition-all group mb-3"
+    >
       {/* Header */}
       <div className="flex items-start justify-between gap-2 mb-2">
         <div className="flex items-center gap-2">
@@ -59,21 +68,23 @@ function TicketCard({ ticket }: { ticket: JiraTicket }) {
       </h4>
 
       {/* Labels */}
-      <div className="flex flex-wrap gap-1 mb-3">
-        {ticket.labels.slice(0, 2).map((label) => (
-          <span
-            key={label}
-            className="px-1.5 py-0.5 text-xs bg-[#11151C] text-slate-400 rounded"
-          >
-            {label}
-          </span>
-        ))}
-        {ticket.labels.length > 2 && (
-          <span className="px-1.5 py-0.5 text-xs text-slate-500">
-            +{ticket.labels.length - 2}
-          </span>
-        )}
-      </div>
+      {ticket.labels.length > 0 && (
+        <div className="flex flex-wrap gap-1 mb-3">
+          {ticket.labels.slice(0, 2).map((label) => (
+            <span
+              key={label}
+              className="px-1.5 py-0.5 text-xs bg-[#11151C] text-slate-400 rounded"
+            >
+              {label}
+            </span>
+          ))}
+          {ticket.labels.length > 2 && (
+            <span className="px-1.5 py-0.5 text-xs text-slate-500">
+              +{ticket.labels.length - 2}
+            </span>
+          )}
+        </div>
+      )}
 
       {/* Footer */}
       <div className="flex items-center justify-between pt-3 border-t border-[#2d3548]">
@@ -84,13 +95,7 @@ function TicketCard({ ticket }: { ticket: JiraTicket }) {
             <span className="text-xs text-slate-500">?</span>
           </div>
         )}
-        <div className="flex items-center gap-2">
-          {ticket.storyPoints && (
-            <span className="px-2 py-0.5 text-xs bg-[#3EBBB7]/10 text-[#3EBBB7] rounded-full font-medium">
-              {ticket.storyPoints} SP
-            </span>
-          )}
-        </div>
+        <span className="text-xs text-slate-500 capitalize">{ticket.type}</span>
       </div>
     </div>
   );
@@ -99,6 +104,8 @@ function TicketCard({ ticket }: { ticket: JiraTicket }) {
 export default function BoardPage() {
   const [selectedSprint, setSelectedSprint] = useState('sprint-1');
   const [showBacklog, setShowBacklog] = useState(false);
+  const [tickets, setTickets] = useState(mockJiraTickets);
+  const [draggedTicket, setDraggedTicket] = useState<JiraTicket | null>(null);
 
   const activeSprint = mockSprints.find(s => s.id === selectedSprint);
   const columns: TicketStatus[] = showBacklog
@@ -107,21 +114,45 @@ export default function BoardPage() {
 
   const getTicketsByStatus = (status: TicketStatus) => {
     if (showBacklog && status === 'backlog') {
-      return mockJiraTickets.filter(t => t.status === 'backlog');
+      return tickets.filter(t => t.status === 'backlog');
     }
-    return mockJiraTickets.filter(t => t.status === status && t.sprint === selectedSprint);
+    return tickets.filter(t => t.status === status && t.sprint === selectedSprint);
   };
 
-  const sprintTickets = mockJiraTickets.filter(t => t.sprint === selectedSprint);
-  const totalPoints = sprintTickets.reduce((sum, t) => sum + (t.storyPoints || 0), 0);
-  const completedPoints = sprintTickets
-    .filter(t => t.status === 'done')
-    .reduce((sum, t) => sum + (t.storyPoints || 0), 0);
+  const sprintTickets = tickets.filter(t => t.sprint === selectedSprint);
+
+  const handleDragStart = (e: React.DragEvent, ticket: JiraTicket) => {
+    setDraggedTicket(ticket);
+    e.dataTransfer.effectAllowed = 'move';
+  };
+
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'move';
+  };
+
+  const handleDrop = (e: React.DragEvent, targetStatus: TicketStatus) => {
+    e.preventDefault();
+    if (!draggedTicket) return;
+
+    setTickets(prev =>
+      prev.map(t =>
+        t.id === draggedTicket.id
+          ? { ...t, status: targetStatus, sprint: targetStatus === 'backlog' ? undefined : selectedSprint }
+          : t
+      )
+    );
+    setDraggedTicket(null);
+  };
+
+  const handleDragEnd = () => {
+    setDraggedTicket(null);
+  };
 
   return (
     <DashboardLayout
       title="Sprint Board"
-      subtitle="JIRA-style task board for the team"
+      subtitle="Drag and drop tasks between columns"
     >
       {/* Sprint Header */}
       <Card className="mb-6">
@@ -140,34 +171,16 @@ export default function BoardPage() {
                 ))}
               </select>
               {activeSprint && (
-                <div>
-                  <Badge variant={activeSprint.status === 'active' ? 'success' : 'default'} className="capitalize">
-                    {activeSprint.status}
-                  </Badge>
-                </div>
+                <Badge variant={activeSprint.status === 'active' ? 'success' : 'default'} className="capitalize">
+                  {activeSprint.status}
+                </Badge>
               )}
             </div>
 
-            <div className="flex items-center gap-6">
-              {/* Sprint Stats */}
-              <div className="flex items-center gap-4 text-sm">
-                <div>
-                  <span className="text-slate-400">Tickets: </span>
-                  <span className="text-white font-medium">{sprintTickets.length}</span>
-                </div>
-                <div>
-                  <span className="text-slate-400">Points: </span>
-                  <span className="text-[#41DC7A] font-medium">{completedPoints}</span>
-                  <span className="text-slate-400">/{totalPoints}</span>
-                </div>
-                <div className="w-32 h-2 bg-[#11151C] rounded-full overflow-hidden">
-                  <div
-                    className="h-full bg-gradient-to-r from-[#3EBBB7] to-[#41DC7A] rounded-full"
-                    style={{ width: `${totalPoints > 0 ? (completedPoints / totalPoints) * 100 : 0}%` }}
-                  />
-                </div>
-              </div>
-
+            <div className="flex items-center gap-4">
+              <span className="text-sm text-slate-400">
+                {sprintTickets.length} tickets in sprint
+              </span>
               <div className="flex items-center gap-2">
                 <Button
                   variant={showBacklog ? 'primary' : 'secondary'}
@@ -200,36 +213,45 @@ export default function BoardPage() {
       {/* Kanban Board */}
       <div className={`grid gap-4 ${showBacklog ? 'grid-cols-5' : 'grid-cols-4'}`}>
         {columns.map((status) => {
-          const tickets = getTicketsByStatus(status);
+          const columnTickets = getTicketsByStatus(status);
           const config = statusConfig[status];
-          const columnPoints = tickets.reduce((sum, t) => sum + (t.storyPoints || 0), 0);
 
           return (
-            <div key={status} className="flex flex-col min-h-[500px]">
+            <div
+              key={status}
+              className="flex flex-col min-h-[500px]"
+              onDragOver={handleDragOver}
+              onDrop={(e) => handleDrop(e, status)}
+            >
               {/* Column Header */}
               <div className={`flex items-center justify-between px-3 py-2 rounded-lg ${config.bgColor} mb-4`}>
                 <div className="flex items-center gap-2">
                   <span className={`font-medium text-sm ${config.color}`}>{config.label}</span>
                   <span className="text-xs text-slate-500 bg-[#11151C] px-2 py-0.5 rounded-full">
-                    {tickets.length}
+                    {columnTickets.length}
                   </span>
                 </div>
-                {columnPoints > 0 && (
-                  <span className="text-xs text-slate-500">
-                    {columnPoints} pts
-                  </span>
-                )}
               </div>
 
-              {/* Tickets */}
-              <div className="flex-1 space-y-0">
-                {tickets.map((ticket) => (
-                  <TicketCard key={ticket.id} ticket={ticket} />
+              {/* Drop Zone */}
+              <div
+                className={`flex-1 space-y-0 p-2 rounded-lg transition-colors ${
+                  draggedTicket ? 'border-2 border-dashed border-[#3EBBB7]/30 bg-[#3EBBB7]/5' : ''
+                }`}
+              >
+                {columnTickets.map((ticket) => (
+                  <TicketCard
+                    key={ticket.id}
+                    ticket={ticket}
+                    onDragStart={handleDragStart}
+                  />
                 ))}
 
-                {tickets.length === 0 && (
+                {columnTickets.length === 0 && (
                   <div className="flex items-center justify-center h-24 border-2 border-dashed border-[#2d3548] rounded-lg">
-                    <p className="text-sm text-slate-500">No tickets</p>
+                    <p className="text-sm text-slate-500">
+                      {draggedTicket ? 'Drop here' : 'No tickets'}
+                    </p>
                   </div>
                 )}
               </div>
@@ -242,7 +264,7 @@ export default function BoardPage() {
       <Card className="mt-6">
         <CardContent className="p-4">
           <div className="flex flex-wrap items-center gap-6 text-sm">
-            <span className="text-slate-400 font-medium">Legend:</span>
+            <span className="text-slate-400 font-medium">Types:</span>
             {Object.entries(typeIcons).map(([type, config]) => (
               <div key={type} className="flex items-center gap-1">
                 <span>{config.icon}</span>
@@ -250,7 +272,8 @@ export default function BoardPage() {
               </div>
             ))}
             <div className="border-l border-[#2d3548] pl-6 flex items-center gap-4">
-              {Object.entries(priorityConfig).map(([priority, config]) => (
+              <span className="text-slate-400 font-medium">Priority:</span>
+              {Object.entries(priorityConfig).slice(0, 3).map(([priority, config]) => (
                 <div key={priority} className="flex items-center gap-1">
                   <span className={config.color}>{config.label}</span>
                   <span className="text-slate-400 capitalize">{priority}</span>
