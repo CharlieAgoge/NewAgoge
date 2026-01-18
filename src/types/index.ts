@@ -94,3 +94,92 @@ export interface Notification {
   link?: string;
   createdAt: Date;
 }
+
+// JIRA Board Types
+export interface JiraTicket {
+  id: string;
+  key: string;
+  title: string;
+  description?: string;
+  type: 'story' | 'bug' | 'task' | 'epic' | 'subtask';
+  status: 'backlog' | 'todo' | 'in-progress' | 'review' | 'done';
+  priority: 'lowest' | 'low' | 'medium' | 'high' | 'highest';
+  assignee?: string;
+  reporter: string;
+  projectId: string;
+  epicId?: string;
+  storyPoints?: number;
+  labels: string[];
+  sprint?: string;
+  dueDate?: Date;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface Sprint {
+  id: string;
+  name: string;
+  goal?: string;
+  startDate: Date;
+  endDate: Date;
+  status: 'planning' | 'active' | 'completed';
+}
+
+// Learning Tracker Types
+export interface LearningPath {
+  id: string;
+  title: string;
+  description: string;
+  category: 'security' | 'devops' | 'cloud' | 'programming' | 'soft-skills';
+  difficulty: 'beginner' | 'intermediate' | 'advanced' | 'expert';
+  estimatedHours: number;
+  modules: LearningModule[];
+  createdAt: Date;
+}
+
+export interface LearningModule {
+  id: string;
+  title: string;
+  description: string;
+  type: 'video' | 'article' | 'quiz' | 'project' | 'lab';
+  duration: number; // in minutes
+  resources: string[];
+  order: number;
+}
+
+export interface LearningProgress {
+  userId: string;
+  pathId: string;
+  completedModules: string[];
+  currentModule?: string;
+  startedAt: Date;
+  completedAt?: Date;
+  score?: number;
+}
+
+export interface Certificate {
+  id: string;
+  userId: string;
+  pathId: string;
+  pathTitle: string;
+  issuedAt: Date;
+  score: number;
+}
+
+// Tekyu Projects Types
+export interface TekyuProject {
+  id: string;
+  name: string;
+  description: string;
+  category: 'security-tools' | 'automation' | 'infrastructure' | 'training' | 'client-projects';
+  status: 'active' | 'completed' | 'archived';
+  techStack: string[];
+  repoUrl?: string;
+  demoUrl?: string;
+  docsUrl?: string;
+  thumbnail?: string;
+  accessLevel: 'all-employees' | 'team-leads' | 'admins-only';
+  createdBy: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
