@@ -1,4 +1,4 @@
-import type { Project, Task, TeamMember, Activity, DashboardStats, JiraTicket, Sprint, LearningPath, LearningProgress, Certificate, TekyuProject, KBSpace, KBPage, KBTemplate, Certification, UserCertification, Operator, OperatorProject } from '@/types';
+import type { Project, Task, TeamMember, Activity, DashboardStats, JiraTicket, Sprint, LearningPath, LearningProgress, Certificate, TekyuProject, KBSpace, KBPage, KBTemplate, Certification, UserCertification, Operator, OperatorProject, SalesTrainingModule, PipelineDeal, Company, Contact, OutreachActivity } from '@/types';
 
 export const mockTeamMembers: TeamMember[] = [
   {
@@ -1953,4 +1953,582 @@ export const mockOperatorProjects: OperatorProject[] = [
     category: 'ai-security',
     steps: [],
   },
+];
+
+// Sales Training Modules - AI Security Workshops
+export const mockSalesTrainingModules: SalesTrainingModule[] = [
+  {
+    id: 'st-1',
+    title: 'AI Security Workshop Overview',
+    description: 'Understanding our core offering - AI Security Workshops for enterprises',
+    category: 'product-knowledge',
+    duration: 45,
+    icon: '🎯',
+    content: `# AI Security Workshop Overview
+
+## What We Offer
+
+DevSecAI delivers hands-on AI Security Workshops that help organizations secure their AI/ML systems against emerging threats.
+
+### Workshop Types
+
+1. **AI Security Fundamentals** (1 day)
+   - Introduction to AI/ML security risks
+   - OWASP Top 10 for LLMs
+   - Hands-on threat modeling for AI systems
+   - Price: £5,000 - £8,000
+
+2. **LLM Security Deep Dive** (2 days)
+   - Prompt injection attacks and defenses
+   - Data leakage prevention
+   - Jailbreaking and guardrails
+   - Red teaming LLM applications
+   - Price: £10,000 - £15,000
+
+3. **AI Agent Security** (2 days)
+   - Securing autonomous AI agents
+   - Tool use and function calling security
+   - Agent incident response
+   - Price: £12,000 - £18,000
+
+4. **Custom Enterprise Program** (3-5 days)
+   - Tailored to organization's tech stack
+   - Internal security assessment included
+   - Ongoing support package
+   - Price: £25,000 - £50,000
+
+### Target Industries
+- Financial Services
+- Healthcare
+- Technology
+- Government
+- Retail/E-commerce`,
+    resources: ['Workshop brochure PDF', 'Pricing guide', 'Case studies'],
+    order: 1,
+  },
+  {
+    id: 'st-2',
+    title: 'Identifying Target Companies',
+    description: 'How to identify and research companies that need AI Security Workshops',
+    category: 'outreach',
+    duration: 30,
+    icon: '🔍',
+    content: `# Identifying Target Companies
+
+## Ideal Customer Profile (ICP)
+
+### Company Characteristics
+- **Size**: 200+ employees
+- **Revenue**: £10M+ annual revenue
+- **Industry**: Finance, Healthcare, Tech, Government
+- **Tech Maturity**: Already using or planning to use AI/ML
+
+### Buying Signals
+1. Recently hired ML/AI engineers
+2. Published AI strategy or press releases
+3. Using ChatGPT Enterprise or similar
+4. Compliance-heavy industry (GDPR, HIPAA, SOC2)
+5. Previous security incidents
+
+### Where to Find Leads
+- LinkedIn Sales Navigator
+- Company tech blogs
+- AI/ML job postings
+- Industry conferences
+- Security meetups
+- GitHub organization activity
+
+### Research Checklist
+- [ ] Company uses AI/ML in production
+- [ ] Has dedicated security team
+- [ ] Budget authority identified
+- [ ] Recent growth or funding
+- [ ] Compliance requirements`,
+    resources: ['ICP template', 'Research checklist', 'LinkedIn search filters'],
+    order: 2,
+  },
+  {
+    id: 'st-3',
+    title: 'LinkedIn Outreach Mastery',
+    description: 'Effective LinkedIn messaging templates and strategies',
+    category: 'outreach',
+    duration: 40,
+    icon: '💼',
+    content: `# LinkedIn Outreach Mastery
+
+## Connection Request Templates
+
+### Template 1 - Direct Value
+"Hi [Name], I noticed [Company] is expanding its AI capabilities. We help companies like yours secure their AI systems against emerging threats. Would love to connect and share some insights."
+
+### Template 2 - Mutual Connection
+"Hi [Name], I see we're both connected to [Mutual]. I specialize in AI security and thought given [Company]'s AI initiatives, it might be worth connecting."
+
+### Template 3 - Content-Based
+"Hi [Name], really enjoyed your post about [Topic]. At DevSecAI, we're working on similar challenges from a security angle. Would be great to connect."
+
+## Follow-Up Message (After Connection)
+
+"Thanks for connecting, [Name]!
+
+I wanted to reach out because I've been following [Company]'s AI initiatives. We recently helped [Similar Company] secure their LLM applications and reduce their AI-related security incidents by 70%.
+
+Would you be open to a 15-minute call to discuss how we might help [Company] with AI security? I can share some quick wins we've seen work well for companies at your stage.
+
+Best,
+[Your Name]"
+
+## Best Practices
+- Personalize every message
+- Reference specific company initiatives
+- Keep messages under 300 characters for connection requests
+- Follow up 3-5 days after connection
+- Share valuable content before pitching`,
+    resources: ['Message templates doc', 'LinkedIn automation guide'],
+    order: 3,
+  },
+  {
+    id: 'st-4',
+    title: 'Email Outreach Sequences',
+    description: 'Cold email templates and follow-up sequences that convert',
+    category: 'outreach',
+    duration: 35,
+    icon: '📧',
+    content: `# Email Outreach Sequences
+
+## Email 1: Initial Outreach
+
+Subject: AI Security for [Company] - Quick Question
+
+Hi [Name],
+
+I noticed [Company] recently [specific AI initiative - job posting, press release, etc.].
+
+We've been helping companies like [Similar Company] and [Another Company] secure their AI/ML systems. One thing we've found is that traditional security approaches miss about 80% of AI-specific vulnerabilities.
+
+Would you be open to a 15-minute call to discuss how [Company] is approaching AI security?
+
+Best,
+[Your Name]
+
+## Email 2: Follow-Up (Day 3)
+
+Subject: Re: AI Security for [Company]
+
+Hi [Name],
+
+Following up on my previous email. I thought you might find this interesting:
+
+We just published a case study on how [Similar Company] identified and fixed 12 critical AI vulnerabilities before launch. Happy to share it if useful.
+
+Would Thursday or Friday work for a quick call?
+
+## Email 3: Value Add (Day 7)
+
+Subject: AI Security checklist for [Company]
+
+Hi [Name],
+
+I put together a quick AI Security Checklist based on what we're seeing in the market. Thought it might be useful for [Company]:
+
+✓ LLM prompt injection testing
+✓ Data leakage prevention
+✓ Model access controls
+✓ AI incident response plan
+
+Would love to walk you through it on a 15-minute call. How's your calendar looking?
+
+## Email 4: Break-Up (Day 14)
+
+Subject: Should I close your file?
+
+Hi [Name],
+
+I haven't heard back, so I'm assuming AI security isn't a priority right now.
+
+If things change, feel free to reach out. I'm always happy to help.
+
+Best,
+[Your Name]`,
+    resources: ['Email templates', 'Subject line swipe file'],
+    order: 4,
+  },
+  {
+    id: 'st-5',
+    title: 'Discovery Call Framework',
+    description: 'How to run effective discovery calls that qualify and convert',
+    category: 'sales-skills',
+    duration: 45,
+    icon: '📞',
+    content: `# Discovery Call Framework
+
+## Call Structure (30 minutes)
+
+### 1. Opening (2 min)
+- Thank them for their time
+- Set agenda and time check
+- Confirm they're the right person
+
+### 2. Situation Questions (8 min)
+- "Tell me about your current AI/ML initiatives"
+- "How is security currently handled for AI systems?"
+- "What's your team structure for AI development?"
+
+### 3. Problem Questions (10 min)
+- "What concerns do you have about AI security?"
+- "Have you experienced any AI-related security incidents?"
+- "What happens if an AI system is compromised?"
+
+### 4. Implication Questions (5 min)
+- "What would a data breach through AI cost the company?"
+- "How would regulators respond to an AI incident?"
+- "What's the impact on customer trust?"
+
+### 5. Need-Payoff Questions (3 min)
+- "How valuable would it be to have your team trained in AI security?"
+- "What would change if you could prevent AI attacks?"
+
+### 6. Next Steps (2 min)
+- Summarize key points
+- Propose workshop or follow-up
+- Set concrete next action
+
+## Qualification Criteria (BANT)
+- **Budget**: Can they afford £5K-50K?
+- **Authority**: Are they the decision maker?
+- **Need**: Do they have AI in production?
+- **Timeline**: When do they need to act?`,
+    resources: ['Call script', 'Qualification scorecard', 'Objection handling guide'],
+    order: 5,
+  },
+  {
+    id: 'st-6',
+    title: 'Workshop Delivery Excellence',
+    description: 'How to deliver world-class AI Security Workshops',
+    category: 'workshop-delivery',
+    duration: 60,
+    icon: '🎓',
+    content: `# Workshop Delivery Excellence
+
+## Pre-Workshop Preparation
+
+### 1 Week Before
+- [ ] Confirm attendee list
+- [ ] Send pre-workshop survey
+- [ ] Customize examples for their industry
+- [ ] Test all lab environments
+- [ ] Prepare certificates
+
+### Day Before
+- [ ] Final tech check
+- [ ] Review attendee backgrounds
+- [ ] Prepare name tags
+- [ ] Test projector/screen share
+
+## Workshop Structure (1-Day Example)
+
+### Morning (9:00 - 12:30)
+- 9:00 - Welcome & introductions
+- 9:30 - AI Security Landscape (presentation)
+- 10:30 - Break
+- 10:45 - OWASP Top 10 for LLMs (interactive)
+- 12:00 - Hands-on Lab 1: Prompt Injection
+
+### Lunch (12:30 - 13:30)
+- Network with attendees
+- Gather feedback
+
+### Afternoon (13:30 - 17:00)
+- 13:30 - Threat Modeling for AI (workshop)
+- 14:30 - Hands-on Lab 2: Red Team Exercise
+- 15:30 - Break
+- 15:45 - Building AI Security Programs
+- 16:30 - Q&A and Wrap-up
+- 17:00 - Certificates & Next Steps
+
+## Engagement Techniques
+- Ask questions every 10 minutes
+- Use real-world examples from their industry
+- Include hands-on exercises
+- Create small group discussions
+- Gamify with challenges/prizes
+
+## Post-Workshop
+- Send thank you email same day
+- Share resources within 24 hours
+- Follow up on action items
+- Request testimonial
+- Discuss ongoing engagement`,
+    resources: ['Workshop checklist', 'Slide templates', 'Lab setup guide'],
+    order: 6,
+  },
+  {
+    id: 'st-7',
+    title: 'Handling Objections',
+    description: 'Common objections and how to overcome them',
+    category: 'closing',
+    duration: 30,
+    icon: '🛡️',
+    content: `# Handling Objections
+
+## "It's too expensive"
+
+**Response**: "I understand budget is a concern. Let me share some context: the average AI security incident costs companies £2.3M. Our workshop is an investment of £X to potentially save millions. We also offer flexible payment terms and can start with a smaller pilot. What budget range are you working with?"
+
+## "We don't have time right now"
+
+**Response**: "I hear you - teams are stretched thin. That's actually why many companies prioritize this. The workshop is just 1-2 days, and we handle all the preparation. When would be a better time to discuss? Many clients book 2-3 months in advance."
+
+## "We'll handle it internally"
+
+**Response**: "That's great that you have internal expertise. Our workshops actually complement internal teams by providing specialized AI security knowledge that most security teams don't have yet. We can work alongside your team. Would it help to see what gaps we typically uncover?"
+
+## "I need to talk to my boss"
+
+**Response**: "Absolutely, that makes sense. What information would help you make the case internally? I can prepare an executive summary and ROI calculation. Would it help if I joined a call with your leadership to answer their questions directly?"
+
+## "We're not using AI much yet"
+
+**Response**: "That's actually the perfect time to build security foundations. Companies that bake security in early save 6x compared to retrofitting later. Are there any AI initiatives planned for the next 12 months?"
+
+## "We had a bad experience with consultants"
+
+**Response**: "I'm sorry to hear that. We're different because we focus on hands-on training that empowers your team, not creating dependency. We also offer a satisfaction guarantee. Can I share some testimonials from similar companies?"`,
+    resources: ['Objection handling playbook', 'ROI calculator'],
+    order: 7,
+  },
+  {
+    id: 'st-8',
+    title: 'Closing the Deal',
+    description: 'Techniques for moving deals to close',
+    category: 'closing',
+    duration: 35,
+    icon: '🤝',
+    content: `# Closing the Deal
+
+## Closing Techniques
+
+### 1. Assumptive Close
+"Great, so we're looking at the 2-day LLM Security workshop for your team of 15. I have availability on March 15th or 22nd - which works better for you?"
+
+### 2. Summary Close
+"Let me summarize: You need to secure your AI systems before the product launch in Q2, your team needs hands-on training, and you have budget approved for Q1. Our workshop addresses all of these. Shall we proceed with the agreement?"
+
+### 3. Urgency Close
+"I should mention that we only do 4 workshops per month to ensure quality. March is filling up quickly. Want me to hold a spot while you finalize internally?"
+
+### 4. Trial Close
+"On a scale of 1-10, how confident are you that this workshop would help your team? What would make it a 10?"
+
+## Proposal Best Practices
+
+### Include:
+- Executive summary
+- Scope and deliverables
+- Timeline
+- Investment and payment terms
+- Team bios
+- Testimonials/case studies
+- Terms and conditions
+
+### Follow-Up Sequence
+- Day 0: Send proposal, call to walk through
+- Day 2: "Any questions?" email
+- Day 5: Share relevant case study
+- Day 7: Call to discuss concerns
+- Day 10: Deadline reminder
+
+## Getting Sign-Off
+- Make it easy to sign (DocuSign)
+- Offer payment flexibility
+- Include clear next steps
+- Provide direct contact for questions`,
+    resources: ['Proposal template', 'Contract template', 'Follow-up sequence'],
+    order: 8,
+  },
+];
+
+// Mock Companies for Pipeline
+export const mockCompanies: Company[] = [
+  { id: 'comp-1', name: 'TechCorp UK', website: 'https://techcorp.co.uk', industry: 'Technology', size: 'enterprise', location: 'London, UK', linkedinUrl: 'https://linkedin.com/company/techcorp' },
+  { id: 'comp-2', name: 'FinSecure Bank', website: 'https://finsecure.com', industry: 'Financial Services', size: 'enterprise', location: 'Manchester, UK' },
+  { id: 'comp-3', name: 'HealthAI Ltd', website: 'https://healthai.io', industry: 'Healthcare', size: 'medium', location: 'Cambridge, UK' },
+  { id: 'comp-4', name: 'RetailMax', website: 'https://retailmax.co.uk', industry: 'Retail', size: 'medium', location: 'Birmingham, UK' },
+  { id: 'comp-5', name: 'GovTech Solutions', website: 'https://govtech.gov.uk', industry: 'Government', size: 'enterprise', location: 'London, UK' },
+  { id: 'comp-6', name: 'StartupAI', website: 'https://startupai.io', industry: 'Technology', size: 'startup', location: 'Bristol, UK' },
+  { id: 'comp-7', name: 'InsureTech Pro', website: 'https://insuretech.com', industry: 'Insurance', size: 'medium', location: 'Edinburgh, UK' },
+  { id: 'comp-8', name: 'DataDriven Corp', website: 'https://datadriven.co', industry: 'Technology', size: 'enterprise', location: 'Leeds, UK' },
+];
+
+// Mock Contacts
+export const mockContacts: Contact[] = [
+  { id: 'cont-1', companyId: 'comp-1', name: 'James Wilson', title: 'CISO', email: 'j.wilson@techcorp.co.uk', linkedinUrl: 'https://linkedin.com/in/jameswilson', isPrimary: true },
+  { id: 'cont-2', companyId: 'comp-1', name: 'Sarah Thompson', title: 'Head of AI', email: 's.thompson@techcorp.co.uk', isPrimary: false },
+  { id: 'cont-3', companyId: 'comp-2', name: 'Michael Brown', title: 'VP Security', email: 'm.brown@finsecure.com', isPrimary: true },
+  { id: 'cont-4', companyId: 'comp-3', name: 'Dr. Emma Clarke', title: 'CTO', email: 'e.clarke@healthai.io', isPrimary: true },
+  { id: 'cont-5', companyId: 'comp-4', name: 'David Lee', title: 'IT Director', email: 'd.lee@retailmax.co.uk', isPrimary: true },
+  { id: 'cont-6', companyId: 'comp-5', name: 'Robert Taylor', title: 'Security Lead', email: 'r.taylor@govtech.gov.uk', isPrimary: true },
+  { id: 'cont-7', companyId: 'comp-6', name: 'Lisa Chen', title: 'CEO', email: 'lisa@startupai.io', isPrimary: true },
+  { id: 'cont-8', companyId: 'comp-7', name: 'Andrew Scott', title: 'CISO', email: 'a.scott@insuretech.com', isPrimary: true },
+];
+
+// Mock Pipeline Deals
+export const mockPipelineDeals: PipelineDeal[] = [
+  {
+    id: 'deal-1',
+    companyId: 'comp-1',
+    company: mockCompanies[0],
+    contacts: mockContacts.filter(c => c.companyId === 'comp-1'),
+    stage: 'proposal-sent',
+    workshopType: 'llm-security',
+    value: 15000,
+    currency: 'GBP',
+    probability: 60,
+    expectedCloseDate: new Date('2025-02-15'),
+    notes: 'Very interested after demo. Budget approved for Q1. Decision expected next week.',
+    assignedTo: '1',
+    lastContactDate: new Date('2025-01-15'),
+    nextFollowUp: new Date('2025-01-20'),
+    outreachMethod: 'linkedin',
+    createdAt: new Date('2025-01-05'),
+    updatedAt: new Date('2025-01-15'),
+  },
+  {
+    id: 'deal-2',
+    companyId: 'comp-2',
+    company: mockCompanies[1],
+    contacts: mockContacts.filter(c => c.companyId === 'comp-2'),
+    stage: 'meeting-scheduled',
+    workshopType: 'ai-security-fundamentals',
+    value: 8000,
+    currency: 'GBP',
+    probability: 40,
+    expectedCloseDate: new Date('2025-02-28'),
+    notes: 'Discovery call scheduled for next Tuesday. They mentioned compliance requirements.',
+    assignedTo: '2',
+    lastContactDate: new Date('2025-01-12'),
+    nextFollowUp: new Date('2025-01-21'),
+    outreachMethod: 'email',
+    createdAt: new Date('2025-01-08'),
+    updatedAt: new Date('2025-01-12'),
+  },
+  {
+    id: 'deal-3',
+    companyId: 'comp-3',
+    company: mockCompanies[2],
+    contacts: mockContacts.filter(c => c.companyId === 'comp-3'),
+    stage: 'negotiation',
+    workshopType: 'ai-agent-security',
+    value: 18000,
+    currency: 'GBP',
+    probability: 75,
+    expectedCloseDate: new Date('2025-01-31'),
+    notes: 'Negotiating on dates. They want March but we suggested February. Close to signing.',
+    assignedTo: '1',
+    lastContactDate: new Date('2025-01-17'),
+    nextFollowUp: new Date('2025-01-19'),
+    outreachMethod: 'referral',
+    createdAt: new Date('2024-12-15'),
+    updatedAt: new Date('2025-01-17'),
+  },
+  {
+    id: 'deal-4',
+    companyId: 'comp-4',
+    company: mockCompanies[3],
+    contacts: mockContacts.filter(c => c.companyId === 'comp-4'),
+    stage: 'contacted',
+    workshopType: 'ai-security-fundamentals',
+    value: 5000,
+    currency: 'GBP',
+    probability: 20,
+    notes: 'Sent initial email. Awaiting response.',
+    assignedTo: '3',
+    lastContactDate: new Date('2025-01-14'),
+    nextFollowUp: new Date('2025-01-18'),
+    outreachMethod: 'cold-call',
+    createdAt: new Date('2025-01-14'),
+    updatedAt: new Date('2025-01-14'),
+  },
+  {
+    id: 'deal-5',
+    companyId: 'comp-5',
+    company: mockCompanies[4],
+    contacts: mockContacts.filter(c => c.companyId === 'comp-5'),
+    stage: 'closed-won',
+    workshopType: 'custom',
+    value: 45000,
+    currency: 'GBP',
+    probability: 100,
+    expectedCloseDate: new Date('2025-01-10'),
+    notes: 'Contract signed! 5-day custom program starting March 1st. Huge win!',
+    assignedTo: '1',
+    lastContactDate: new Date('2025-01-10'),
+    outreachMethod: 'inbound',
+    createdAt: new Date('2024-11-20'),
+    updatedAt: new Date('2025-01-10'),
+  },
+  {
+    id: 'deal-6',
+    companyId: 'comp-6',
+    company: mockCompanies[5],
+    contacts: mockContacts.filter(c => c.companyId === 'comp-6'),
+    stage: 'lead',
+    workshopType: 'llm-security',
+    value: 10000,
+    currency: 'GBP',
+    probability: 10,
+    notes: 'Found on LinkedIn. CEO posted about AI security concerns. Need to reach out.',
+    assignedTo: '2',
+    outreachMethod: 'linkedin',
+    createdAt: new Date('2025-01-16'),
+    updatedAt: new Date('2025-01-16'),
+  },
+  {
+    id: 'deal-7',
+    companyId: 'comp-7',
+    company: mockCompanies[6],
+    contacts: mockContacts.filter(c => c.companyId === 'comp-7'),
+    stage: 'closed-lost',
+    workshopType: 'ai-security-fundamentals',
+    value: 8000,
+    currency: 'GBP',
+    probability: 0,
+    notes: 'Lost to competitor. They went with a cheaper option. Follow up in 6 months.',
+    assignedTo: '3',
+    lastContactDate: new Date('2025-01-08'),
+    outreachMethod: 'event',
+    createdAt: new Date('2024-12-01'),
+    updatedAt: new Date('2025-01-08'),
+  },
+  {
+    id: 'deal-8',
+    companyId: 'comp-8',
+    company: mockCompanies[7],
+    contacts: [{ id: 'cont-8', companyId: 'comp-8', name: 'Sophie Adams', title: 'Head of Security', email: 's.adams@datadriven.co', isPrimary: true }],
+    stage: 'proposal-sent',
+    workshopType: 'ai-agent-security',
+    value: 12000,
+    currency: 'GBP',
+    probability: 50,
+    expectedCloseDate: new Date('2025-02-20'),
+    notes: 'Proposal sent yesterday. They are comparing with one other vendor.',
+    assignedTo: '2',
+    lastContactDate: new Date('2025-01-16'),
+    nextFollowUp: new Date('2025-01-22'),
+    outreachMethod: 'linkedin',
+    createdAt: new Date('2025-01-03'),
+    updatedAt: new Date('2025-01-16'),
+  },
+];
+
+// Mock Outreach Activities
+export const mockOutreachActivities: OutreachActivity[] = [
+  { id: 'act-1', dealId: 'deal-1', type: 'linkedin-message', subject: 'Initial connection', notes: 'Connected on LinkedIn. Sent intro message about AI security.', outcome: 'positive', performedBy: '1', performedAt: new Date('2025-01-05') },
+  { id: 'act-2', dealId: 'deal-1', type: 'call', subject: 'Discovery call', notes: 'Great call! They have 5 AI projects in production. Budget confirmed.', outcome: 'positive', nextAction: 'Send proposal', performedBy: '1', performedAt: new Date('2025-01-10') },
+  { id: 'act-3', dealId: 'deal-1', type: 'proposal', subject: 'LLM Security Workshop proposal', notes: 'Sent comprehensive proposal with 2-day workshop option.', performedBy: '1', performedAt: new Date('2025-01-15') },
+  { id: 'act-4', dealId: 'deal-2', type: 'email', subject: 'Cold outreach', notes: 'Sent initial cold email. Used financial services template.', outcome: 'positive', performedBy: '2', performedAt: new Date('2025-01-08') },
+  { id: 'act-5', dealId: 'deal-2', type: 'email', subject: 'Follow-up', notes: 'Sent case study follow-up. Got reply requesting call.', outcome: 'positive', nextAction: 'Schedule discovery call', performedBy: '2', performedAt: new Date('2025-01-12') },
+  { id: 'act-6', dealId: 'deal-3', type: 'meeting', subject: 'In-person presentation', notes: 'Met at their office. Presented to leadership team. Very positive reception.', outcome: 'positive', performedBy: '1', performedAt: new Date('2025-01-10') },
+  { id: 'act-7', dealId: 'deal-3', type: 'proposal', subject: 'Custom workshop proposal', notes: 'Sent updated proposal with their specific requirements.', performedBy: '1', performedAt: new Date('2025-01-14') },
+  { id: 'act-8', dealId: 'deal-5', type: 'demo', subject: 'Full workshop demo', notes: 'Delivered 2-hour sample workshop. They loved it!', outcome: 'positive', performedBy: '1', performedAt: new Date('2024-12-20') },
 ];

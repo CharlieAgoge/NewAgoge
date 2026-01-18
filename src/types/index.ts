@@ -368,3 +368,79 @@ export interface OperatorProjectProgress {
   startedAt: Date;
   completedAt?: Date;
 }
+
+// Sales Training Types
+export interface SalesTrainingModule {
+  id: string;
+  title: string;
+  description: string;
+  category: 'workshop-delivery' | 'outreach' | 'sales-skills' | 'product-knowledge' | 'closing';
+  duration: number; // minutes
+  icon: string;
+  content: string;
+  videoUrl?: string;
+  resources: string[];
+  order: number;
+}
+
+export interface SalesTrainingProgress {
+  userId: string;
+  moduleId: string;
+  completed: boolean;
+  completedAt?: Date;
+  score?: number;
+}
+
+// Sales Pipeline Types
+export interface Company {
+  id: string;
+  name: string;
+  website?: string;
+  industry: string;
+  size: 'startup' | 'small' | 'medium' | 'enterprise';
+  location: string;
+  linkedinUrl?: string;
+}
+
+export interface Contact {
+  id: string;
+  companyId: string;
+  name: string;
+  title: string;
+  email: string;
+  phone?: string;
+  linkedinUrl?: string;
+  isPrimary: boolean;
+}
+
+export interface PipelineDeal {
+  id: string;
+  companyId: string;
+  company: Company;
+  contacts: Contact[];
+  stage: 'lead' | 'contacted' | 'meeting-scheduled' | 'proposal-sent' | 'negotiation' | 'closed-won' | 'closed-lost';
+  workshopType: 'ai-security-fundamentals' | 'llm-security' | 'ai-agent-security' | 'custom';
+  value: number;
+  currency: string;
+  probability: number;
+  expectedCloseDate?: Date;
+  notes: string;
+  assignedTo: string;
+  lastContactDate?: Date;
+  nextFollowUp?: Date;
+  outreachMethod: 'linkedin' | 'email' | 'cold-call' | 'referral' | 'inbound' | 'event';
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface OutreachActivity {
+  id: string;
+  dealId: string;
+  type: 'email' | 'call' | 'linkedin-message' | 'meeting' | 'demo' | 'proposal' | 'follow-up';
+  subject: string;
+  notes: string;
+  outcome?: 'positive' | 'neutral' | 'negative' | 'no-response';
+  nextAction?: string;
+  performedBy: string;
+  performedAt: Date;
+}
